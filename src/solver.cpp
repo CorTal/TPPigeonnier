@@ -2,14 +2,17 @@
 #include <string>
 #include <vector>
 
-typedef bool (*CONSTRAINT) (const std::vector<bool>& mat, int n, int q);
+// Définitions des contraintes, d'autres contraintes peuvent être ajoutée en respectant cette signature
+typedef bool (*CONTRAINTE) (const std::vector<bool>& mat, int n, int q);
 
-bool constraint1(const std::vector<bool>& mat, int n, int q)
+// Contrainte 1 pigeon est affecté à 1 et 1 seul pigeonnier
+bool contrainte1(const std::vector<bool>& mat, int n, int q)
 {
-	for(int i(0); i < n; ++i)
+	unsigned int tmp;
+	for(int i=0; i < n; ++i)
 	{
-		unsigned int tmp = 0;
-		for(int j(0); j < q; ++j)
+		tmp = 0;
+		for(int j=0; j < q; ++j)
 		{
 			tmp += mat[i*q+j];
 		}
@@ -21,12 +24,14 @@ bool constraint1(const std::vector<bool>& mat, int n, int q)
 	return true;
 }
 
-bool constraint2(const std::vector<bool>& mat, int n, int q)
+// Contrainte 1 pigeonnier ne doit pas contenir + de 1 pigeon
+bool contrainte2(const std::vector<bool>& mat, int n, int q)
 {
-	for(int i(0); i < q; ++i)
+	unsigned int tmp;
+	for(int i=0; i < q; ++i)
 	{
-		unsigned int tmp = 0;
-		for(int j(0); j < n; ++j)
+		tmp = 0;
+		for(int j=0; j < n; ++j)
 		{
 			tmp += mat[j*q+i];
 		}
@@ -38,11 +43,12 @@ bool constraint2(const std::vector<bool>& mat, int n, int q)
 	return true;
 }
 
+// Permet de vérifier si 2 matrices sont égales, pour savoir si toutes les possibilités ont été explorées
 bool isequal(const std::vector<bool>& mat1, const std::vector<bool>& mat2)
 {
 	bool is = true;
 
-	for(unsigned int i(0); i < mat1.size(); ++i)
+	for(unsigned int i=0; i < mat1.size(); ++i)
 	{
 		is = (!is || (mat1[i] != mat2[i])) ? false : true;
 	}
@@ -50,31 +56,42 @@ bool isequal(const std::vector<bool>& mat1, const std::vector<bool>& mat2)
 	return is;
 }
 
-bool solve(int n, int q, std::vector<CONSTRAINT> constraints)
+
+bool solve(int n, int q, std::vector<CONTRAINTE> contraintes)
 {
-	std::vector<bool> mat(n*q);
-	std::vector<bool> end(n*q);
-	for(int i(0); i < (n*q); ++i)
+	std::vector<bool> mat(n*q); //Matrice pigeon/pigeonnier initialisée à 0
+	std::vector<bool> end(n*q); //Matrice finale attendue, initialisée à 1
+	for(int i=0; i < (n*q); ++i)
 	{
 		mat[i] = false;
 		end[i] = true;
 	}
 
-	bool sat = false;
+	unsigned int satisfiable = 0; //Nombre de solutions trouvées
 
 	while(!isequal(mat,end))
 	{
 		bool tmp = true;
-		for(unsigned int i(0); i < constraints.size(); ++i)
+		for(unsigned int i=0; i < contraintes.size(); ++i) // On teste chaque contrainte sur la matrice actuelle
 		{
-			tmp = constraints[i](mat, n, q);
+			tmp = contraintes[i](mat, n, q); 
 			if(!tmp)
 				break;
 		}
+		
+		if(tmp) { // Si toutes les contraintes sont respectées c'est qu'on a trouvé une solution
+			++satisfiable;
+			std::cout << "==Solution " << satisfiable << "==" << std::endl;
+			for(int i=0; i < q; ++i) {
+				for(int j=0; j < n; ++j)
+				{
+					std::cout << mat[j*q+i] << "|";
+				}
+				std::cout << std::endl;
+			}
+		}
 
-		sat = (sat || tmp) ? true : false;
-
-		for(unsigned int i(0); i < mat.size(); ++i)
+		for(unsigned int i=0; i < mat.size(); ++i) // On modifie la matrice afin de tester une nouvelle configuration
 		{
 			if(mat[i])
 			{
@@ -88,14 +105,14 @@ bool solve(int n, int q, std::vector<CONSTRAINT> constraints)
 		}
 	}
 
-	return sat;
+	return satisfiable;
 }
 
 int main(int argc, char **argv)
 {
-	int n = 0;
-	int q = 0;
-	for(int i(1); i < argc; ++i)
+	int n = 0; // Nombre de pigeons
+	int q = 0; // Nombre de pigeonniers
+	for(int i=1; i < argc; ++i)
 	{
 		if(std::string(argv[i]) == "-n")
 		{
@@ -107,7 +124,11 @@ int main(int argc, char **argv)
 		}
 	}
 
-	std::cout << "Is sat ? " << solve(n,q,{&constraint1, &constraint2}) << std::endl;
+	if(solve(n,q,{&contrainte1, &contrainte2})>0) {
+		std::cout << "C'est satisfiable" << std::endl;
+	} else {
+		std::cout << "C'est insatisfiable" << std::endl;
+	}
 
 	return 0;
 }
