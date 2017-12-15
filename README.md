@@ -16,4 +16,4 @@ Une première amélioration serait donc de généraliser plus les contraintes de
 
 # Parallélisation
 
-Pour paralléliser le problème, nous avons utilisé OpenMP. La méthode a été assez simple, il nous a suffit de paralléliser la boucle principale du solveur. Pour ce faire, nous avons calculé le nombre total de matrices possible "nbSol". Ce nombre nous l'avons divisé par le nombre de coeurs pour obtenir "size", qui correspond au nombre de matrices à tester par coeur.
+Pour paralléliser le problème, nous avons utilisé OpenMP. La méthode a été assez simple, il nous a suffi de paralléliser la boucle principale du solver. Pour ce faire, nous avons calculé le nombre total de matrices possible "nbSol". Ce nombre nous l'avons divisé par le nombre de coeurs pour obtenir "size", qui correspond au nombre de matrices à tester par coeur.
