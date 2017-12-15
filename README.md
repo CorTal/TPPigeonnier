@@ -4,8 +4,8 @@ CHEVALLIER Sullivan, TALARMAIN Corentin, LEBLOND Alexis
 
 # Utilisation
 
-1 - make all __
-2 - cd bin/ __
+1 - make all <br />
+2 - cd bin/ <br />
 3 - ./solver -n <pigeons> -q <pigeonniers> || ./psolver -n <pigeons> -q <pigeonniers>
 
 # TPPigeonnier
