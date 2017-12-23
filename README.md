@@ -4,8 +4,8 @@ CHEVALLIER Sullivan, TALARMAIN Corentin, LEBLOND Alexis
 
 # Utilisation
 
-1 - bash perf.sh
-2 - Si d'autre tests veulent être effectué veuillez modifier les fichier satisfiable et insatisfiable dans le dossier /bin qui correspondent aux contraintes.
+1 - bash perf.sh <br />
+2 - Si d'autre tests veulent être effectué veuillez modifier les fichier satisfiable et insatisfiable dans le dossier /bin qui correspondent aux contraintes. <br />
 3 - Edition des contrainte c correspond à contrainte le chiffre suivant la valeur minimum de la contrainte, le chiffre suivant la valeur maximum de la contrainte et le dernier chiffre par exemple pour les pigeons correspond aux nombres de pigeon disponible.
 # TPPigeonnier
 
