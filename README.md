@@ -4,10 +4,9 @@ CHEVALLIER Sullivan, TALARMAIN Corentin, LEBLOND Alexis
 
 # Utilisation
 
-1 - make all          <br />
-2 - cd bin/           <br />
-3 - ./solver -n <pigeons> -q <pigeonniers> || ./psolver -n <pigeons> -q <pigeonniers>
-
+1 - bash perf.sh
+2 - Si d'autre tests veulent être effectué veuillez modifier les fichier satisfiable et insatisfiable dans le dossier /bin qui correspondent aux contraintes.
+3 - Edition des contrainte c correspond à contrainte le chiffre suivant la valeur minimum de la contrainte, le chiffre suivant la valeur maximum de la contrainte et le dernier chiffre par exemple pour les pigeons correspond aux nombres de pigeon disponible.
 # TPPigeonnier
 
 Notre projet permet de résoudre le problème du pigeonnier mais aussi de rejouter des contraintes si besoin dans le code, 
