@@ -4,7 +4,7 @@ OFLAGS=-O2
 SRC_DIR = ./src
 BIN_DIR = ./bin
 
-all: initialiser compiler_solver compiler_psolver
+all: clean initialiser compiler_solver compiler_psolver
 
 initialiser: 
 	mkdir -p $(BIN_DIR)
@@ -30,4 +30,4 @@ psolver:
 
 
 clean:
-	rm -f $(BIN_DIR)/*
+	rm -f $(BIN_DIR)/*.exe
